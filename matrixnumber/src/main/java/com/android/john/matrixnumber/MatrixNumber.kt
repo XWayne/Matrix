@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.widget.FrameLayout
 
@@ -21,24 +20,23 @@ class MatrixNumber :FrameLayout {
 //        orientation = HORIZONTAL
         setWillNotDraw(false)
         setBackgroundColor(Color.BLACK)
-
-        postDelayed({
-            addMatrixText()
-        },3000L)
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
         post(this::addNumberItems)
+        postDelayed(this::addMatrixText,3000L)
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-//        addNumberItems()
-        Log.e("John","onMeasure:$measuredWidth")
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
 
+        for (i in 0 until childCount){
+            getChildAt(i).postInvalidate()
+        }
+
+        postInvalidateDelayed(200L)
     }
-
 
     private fun addNumberItems(){
         val count = ( measuredWidth/textSize ).toInt()
@@ -47,7 +45,7 @@ class MatrixNumber :FrameLayout {
                 textSize = this@MatrixNumber.textSize
                 normalColor = this@MatrixNumber.normalColor
                 highLightColor = this@MatrixNumber.highLightColor
-                startDelay = (Math.random() * 500).toLong()
+                startOffset = (Math.random() *8).toInt()
             }
 
             val layoutParameter = LayoutParams(textSize.toInt(),measuredHeight)

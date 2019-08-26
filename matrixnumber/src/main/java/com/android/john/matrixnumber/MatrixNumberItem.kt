@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import kotlin.math.abs
 import kotlin.math.min
@@ -42,7 +41,7 @@ class MatrixNumberItem :View{
             }
         }
 
-    var startDelay = 0L
+    var startOffset = 0
 
     private val isNumberFullScreen:Boolean
         get() = currentHeight >= height
@@ -68,6 +67,10 @@ class MatrixNumberItem :View{
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
+        if (startOffset-->0)
+            return
+
         canvas?.let {
 
             paint.getFontMetrics(fontMetrics)
@@ -76,13 +79,15 @@ class MatrixNumberItem :View{
                 if (isNumberFullScreen) ( height/textHeight ).toInt()
                 else ( currentHeight/textHeight ).toInt()
 
-
-
-            if (textCount == 0){
-                postInvalidateDelayed(startDelay)
-            }else{
+            if (textCount>0){
                 drawNumber(it,textCount)
             }
+
+//            if (textCount == 0){
+//                postInvalidateDelayed(startOffset)
+//            }else{
+//                drawNumber(it,textCount)
+//            }
 
             currentHeight = min(currentHeight+textHeight,height.toFloat())
 
@@ -107,7 +112,7 @@ class MatrixNumberItem :View{
             highLightIndex %= textCount
         }
 
-        postInvalidateDelayed(100L)
+//        postInvalidateDelayed(100L)
     }
 
 
