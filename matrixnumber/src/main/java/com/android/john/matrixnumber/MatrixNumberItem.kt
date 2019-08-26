@@ -11,7 +11,7 @@ import kotlin.math.min
 
 typealias UpdateListener = ()->Unit
 
-class MatrixNumberItem :View{
+internal class MatrixNumberItem :View{
     constructor(context: Context):this(context,null)
     constructor(context: Context, attr: AttributeSet?):super(context,attr,0)
 

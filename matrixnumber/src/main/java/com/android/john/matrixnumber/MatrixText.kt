@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 
-class MatrixText :View{
+internal class MatrixText :View{
     constructor(context: Context):this(context,null)
     constructor(context: Context, attr: AttributeSet?):super(context,attr,0)
 
