@@ -57,9 +57,7 @@ class MatrixNumberItem :View{
     private lateinit var updateListener:UpdateListener
 
     init {
-        paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = this@MatrixNumberItem.textSize
-        }
+        paint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     }
 
@@ -72,7 +70,7 @@ class MatrixNumberItem :View{
             return
 
         canvas?.let {
-
+            paint.textSize = textSize
             paint.getFontMetrics(fontMetrics)
             val textHeight = abs(fontMetrics.descent - fontMetrics.ascent)
             val textCount =

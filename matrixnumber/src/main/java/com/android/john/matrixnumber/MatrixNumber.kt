@@ -10,17 +10,23 @@ import android.widget.FrameLayout
 class MatrixNumber :FrameLayout {
 
     constructor(context: Context):this(context,null)
-    constructor(context: Context,attr:AttributeSet?):super(context,attr,0)
+    constructor(context: Context,attr:AttributeSet?):super(context,attr,0){
+        context.obtainStyledAttributes(attr,R.styleable.MatrixNumber).apply {
+            textSize = getDimension(R.styleable.MatrixNumber_textSize,textSize)
+            normalColor = getColor(R.styleable.MatrixNumber_normalColor,normalColor)
+            highLightColor = getColor(R.styleable.MatrixNumber_highLightColor,highLightColor)
+
+            recycle()
+        }
+
+        setWillNotDraw(false)
+        setBackgroundColor(Color.BLACK)
+    }
 
     private var textSize = DisplayUtil.sp2px(context,15f)
     private var normalColor = Color.GREEN
     private var highLightColor = Color.WHITE
 
-    init {
-//        orientation = HORIZONTAL
-        setWillNotDraw(false)
-        setBackgroundColor(Color.BLACK)
-    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -35,7 +41,7 @@ class MatrixNumber :FrameLayout {
             getChildAt(i).postInvalidate()
         }
 
-        postInvalidateDelayed(200L)
+        postInvalidateDelayed(120L)
     }
 
     private fun addNumberItems(){
